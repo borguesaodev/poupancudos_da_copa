@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poupançudos da Copa - Bolão</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Lado Esquerdo: Painel Principal -->
+        <div class="main-panel">
+            <header>
+                <h1>Poupançudos da copa</h1>
+                <p class="subtitle">Qual jogo deseja apostar?</p>
+            </header>
+
+            <!-- Seções de Jogos -->
+            <div class="stages-container">
+                <div class="stage-card">
+                    <h3>Quartas de final</h3>
+                    <div class="games-list" id="quartas-list">
+                        <button class="game-btn" onclick="openApostaModal('Quartas - Jogo 1', 'Brasil', 'França')">Brasil VS França</button>
+                        <button class="game-btn" onclick="openApostaModal('Quartas - Jogo 2', 'Argentina', 'Holanda')">Argentina VS Holanda</button>
+                        <button class="game-btn" onclick="openApostaModal('Quartas - Jogo 3', 'Inglaterra', 'Senegal')">Inglaterra VS Senegal</button>
+                        <button class="game-btn" onclick="openApostaModal('Quartas - Jogo 4', 'Croácia', 'Japão')">Croácia VS Japão</button>
+                    </div>
+                </div>
+
+                <div class="stage-card">
+                    <h3>Semi-final</h3>
+                    <div class="games-list" id="semi-list">
+                        <button class="game-btn" onclick="openApostaModal('Semi - Jogo 1', 'Brasil', 'Argentina')">Brasil VS Argentina</button>
+                        <button class="game-btn" onclick="openApostaModal('Semi - Jogo 2', 'França', 'Inglaterra')">França VS Inglaterra</button>
+                    </div>
+                </div>
+
+                <div class="stage-card">
+                    <h3>Final</h3>
+                    <div class="games-list" id="final-list">
+                        <button class="game-btn" onclick="openApostaModal('Final', 'Brasil', 'França')">Brasil VS França</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabela de Apostas Feitas -->
+            <div class="apostas-container">
+                <h2>Apostas feitas</h2>
+                <div class="table-wrapper">
+                    <table id="apostas-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Participante</th>
+                                <th>Jogo</th>
+                                <th>Palpite</th>
+                                <th style="text-align: center;">Editar</th>
+                                <th style="text-align: center;">Deletar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="apostas-tbody">
+                            <!-- Inserido dinamicamente via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- POP-UP / MODAL DE APOSTA -->
+    <div id="aposta-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeApostaModal()">&times;</span>
+            <div class="modal-header">POP-UP</div>
+            
+            <form id="aposta-form">
+                <input type="hidden" id="edit-id" value="">
+                <input type="hidden" id="game-title" value="">
+                
+                <!-- Bloco Apostador -->
+                <div class="form-section">
+                    <div class="section-title">Apostador</div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="nome">Nome</label>
+                            <input type="text" id="nome" required placeholder="Digite seu nome">
+                        </div>
+                        <div class="form-group">
+                            <label for="idade">Idade</label>
+                            <input type="number" id="idade" required placeholder="Ex: 25">
+                        </div>
+                        <div class="form-group">
+                            <label for="cpf">CPF</label>
+                            <input type="text" id="cpf" required placeholder="000.000.000-00">
+                        </div>
+                        <div class="form-group">
+                            <label for="telefone">Telefone</label>
+                            <input type="text" id="telefone" required placeholder="(00) 00000-0000">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bloco Aposta -->
+                <div class="form-section">
+                    <div class="section-title">Aposta</div>
+                    <div class="matchup-container">
+                        <div class="team-input">
+                            <span class="team-name" id="label-time1">Bandeira 1</span>
+                            <input type="number" id="placar1" min="0" required value="0">
+                        </div>
+                        <div class="vs-text">VS</div>
+                        <div class="team-input">
+                            <input type="number" id="placar2" min="0" required value="0">
+                            <span class="team-name" id="label-time2">Bandeira 2</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn-apostar" id="submit-btn">Apostar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

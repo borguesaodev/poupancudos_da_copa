@@ -1,49 +1,59 @@
-const express = require("express");
+const express = require('express');
+const cors = require('cors');
+
 const app = express();
-
-let aposta = [];
-
+app.use(cors());
 app.use(express.json());
-// Rotas vão aqui entre o JSON e o static da pasta public
 
-// Rota 1: Ver os jogos
-app.get("/aposta", (req, res) => {
-   res.json(aposta);
+// Simulação de Banco de Dados na memória
+let apostas = [
+    { id: 1, jogo: 'Quartas - Jogo 1', participante: 'Carlos Silva', palpite: 'Brasil 3 x 1 França' },
+    { id: 2, jogo: 'Quartas - Jogo 2', participante: 'Ana Oliveira', palpite: 'Argentina 1 x 2 Holanda' }
+];
+let nextId = 3;
+
+// READ ALL
+app.get('/api/apostas', (req, res) => {
+    res.json(apostas);
 });
 
-// Rota 2: Enviar um palpite
-app.post("/aposta", (req, res) => {
-   let campos = ["time1", "time2", "golstime1", "golstime2"]
-   if(!req.body.time1) {
-      return res.json({mensagem: "Informe o Time 1"});
-   }
-
-   const palpite = {
-       id: aposta.length + 1,
-       time1: req.body.time1,
-       time2: req.body.time2,
-       golstime1: req.body.golstime1,
-       golstime2: req.body.golstime2
-   };
-
-   aposta.push(palpite);
-
-   res.json(palpite);
+// CREATE
+app.post('/api/apostas', (req, res) => {
+    const { jogo, participante, palpite } = req.body;
+    if (!jogo || !participante || !palpite) {
+        return res.status(400).json({ error: 'Campos obrigatórios ausentes.' });
+    }
+    const novaAposta = { id: nextId++, jogo, participante, palpite };
+    apostas.push(novaAposta);
+    res.status(201).json(novaAposta);
 });
 
-// Rota 3: Atualizar o placar real do jogo e calcular pontos
-app.put("/usuarios/:id", (req, res) => {
-   const usuario = usuarios.find(
-       u => u.id == req.params.id
-   );
-
-   usuario.nome = req.body.nome;
-
-   res.json(usuario);
+// UPDATE
+app.put('/api/apostas/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const { jogo, participante, palpite } = req.body;
+    
+    const index = apostas.findIndex(a => a.id === id);
+    if (index === -1) {
+        return res.status(404).json({ error: 'Aposta não encontrada.' });
+    }
+    
+    apostas[index] = { ...apostas[index], jogo, participante, palpite };
+    res.json(apostas[index]);
 });
 
+// DELETE
+app.delete('/api/apostas/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const index = apostas.findIndex(a => a.id === id);
+    if (index === -1) {
+        return res.status(404).json({ error: 'Aposta não encontrada.' });
+    }
+    apostas.splice(index, 1);
+    res.status(204).send();
+});
 
-
-app.use(express.static('public'));
-
-app.listen(3000);
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`Servidor rodando em http://localhost:${PORT}`);
+});
