@@ -48,6 +48,36 @@ app.post("/aposta", (req, res) => {
    res.json(palpite);
 });
 
+app.post("/aposta/ :id", (req, res) => {
+   const idJogo = parseInt(req.params.id);
+   const { golsTime1, golsTime2 } = req.body
+
+   const jogo = aposta.find(
+      a => a.id === req.params.id
+   );
+
+   if (!jogo) {
+      // Se não encontrar o jogo, retorna erro 404 (não encontrado)
+      return res.status(404).send("Não encontrado aposta. ");
+   }
+   jogo.golsTime1 = golsTime1;
+   jogo.golsTime2 = golsTime2;
+
+   const resultado = palpite;
+
+   palpite.find(
+      p => p.idJogo === idJogo
+   ).map( 
+      p => {
+         const pontos = 0;
+
+         if (p.time1 === golsTime1)
+      }
+
+   )
+
+
+});
 
 app.use(express.static('public'));
 
