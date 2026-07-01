@@ -67,14 +67,11 @@ app.post("/aposta/ :id", (req, res) => {
 
    palpite.find(
       p => p.idJogo === idJogo
-   ).map( 
-      p => {
-         const pontos = 0;
+   );
 
-         if (p.time1 === golsTime1)
-      }
-
-   )
+   for(let i = 0; i < palpite.length; i++){
+      
+   }
 
 
 });
