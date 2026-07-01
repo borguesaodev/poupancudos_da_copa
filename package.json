@@ -1,9 +1,6 @@
 {
   "dependencies": {
-<<<<<<< HEAD
-=======
     "cors": "^2.8.6",
->>>>>>> e8d130835b8194c0d7f982612caacd74d5af8c85
     "express": "^5.2.1"
   }
 }
