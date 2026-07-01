@@ -44,13 +44,26 @@ function renderTable(apostas) {
             <td>${aposta.id}</td>
             <td><strong>${aposta.participante}</strong></td>
             <td>${aposta.jogo}</td>
-            <td><span class="vs-text" style="font-size:12px; padding:2px 6px;">${aposta.palpite}</span></td>
+            <td><span class="palpite-tag">${aposta.palpite}</span></td>
             <td><button class="btn-action btn-edit" onclick="editAposta(${aposta.id}, '${aposta.participante}', '${aposta.jogo}', '${aposta.palpite}')">Editar</button></td>
             <td><button class="btn-action btn-delete" onclick="deleteAposta(${aposta.id})">Deletar</button></td>
         `;
         tbody.appendChild(tr);
     });
 }
+    
+    apostas.forEach(aposta => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${aposta.id}</td>
+            <td><strong>${aposta.participante}</strong></td>
+            <td>${aposta.jogo}</td>
+            <td><span class="vs-text" style="font-size:12px; padding:2px 6px;">${aposta.palpite}</span></td>
+            <td><button class="btn-action btn-edit" onclick="editAposta(${aposta.id}, '${aposta.participante}', '${aposta.jogo}', '${aposta.palpite}')">Editar</button></td>
+            <td><button class="btn-action btn-delete" onclick="deleteAposta(${aposta.id})">Deletar</button></td>
+        `;
+        tbody.appendChild(tr);
+    });
 
 function openApostaModal(game, team1, team2) {
     form.reset();
