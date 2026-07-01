@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000/api/apostas';
+const API_URL = 'http://localhost:3000/aposta';
 
 // Elementos DOM
 const modal = document.getElementById('aposta-modal');
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', fetchApostas);
 
 async function fetchApostas() {
     try {
-        const response = await fetch('http://localhost:3000/api/apostas');
+        const response = await fetch('http://localhost:3000/aposta');
         const apostas = await response.json();
         renderTable(apostas);
     } catch (error) {
@@ -51,19 +51,6 @@ function renderTable(apostas) {
         tbody.appendChild(tr);
     });
 }
-    
-    apostas.forEach(aposta => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${aposta.id}</td>
-            <td><strong>${aposta.participante}</strong></td>
-            <td>${aposta.jogo}</td>
-            <td><span class="vs-text" style="font-size:12px; padding:2px 6px;">${aposta.palpite}</span></td>
-            <td><button class="btn-action btn-edit" onclick="editAposta(${aposta.id}, '${aposta.participante}', '${aposta.jogo}', '${aposta.palpite}')">Editar</button></td>
-            <td><button class="btn-action btn-delete" onclick="deleteAposta(${aposta.id})">Deletar</button></td>
-        `;
-        tbody.appendChild(tr);
-    });
 
 function openApostaModal(game, team1, team2) {
     form.reset();
@@ -93,7 +80,7 @@ form.addEventListener('submit', async (e) => {
     try {
         if (id) {
             // Atualizar (PUT)
-            await fetch(`${'http://localhost:3000/api/apostas'}/${id}`, {
+            await fetch(`${'http://localhost:3000/aposta'}/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
@@ -101,7 +88,7 @@ form.addEventListener('submit', async (e) => {
         } {
             // Criar (POST)
             if (!id) {
-                await fetch('http://localhost:3000/api/apostas', {
+                await fetch('http://localhost:3000/aposta', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
@@ -139,7 +126,7 @@ function editAposta(id, participante, jogo, palpite) {
 async function deleteAposta(id) {
     if (confirm('Deseja realmente deletar esta aposta?')) {
         try {
-            await fetch(`${'http://localhost:3000/api/apostas'}/${id}`, { method: 'DELETE' });
+            await fetch(`${'http://localhost:3000/aposta'}/${id}`, { method: 'DELETE' });
             fetchApostas();
         } catch (error) {
             console.error('Erro ao deletar aposta:', error);
