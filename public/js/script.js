@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', fetchApostas);
 
 async function fetchApostas() {
     try {
-        const response = await fetch(API_URL);
+        const response = await fetch('http://localhost:3000/api/apostas');
         const apostas = await response.json();
         renderTable(apostas);
     } catch (error) {
@@ -80,7 +80,7 @@ form.addEventListener('submit', async (e) => {
     try {
         if (id) {
             // Atualizar (PUT)
-            await fetch(`${API_URL}/${id}`, {
+            await fetch(`${'http://localhost:3000/api/apostas'}/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
@@ -88,7 +88,7 @@ form.addEventListener('submit', async (e) => {
         } {
             // Criar (POST)
             if (!id) {
-                await fetch(API_URL, {
+                await fetch('http://localhost:3000/api/apostas', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
@@ -126,7 +126,7 @@ function editAposta(id, participante, jogo, palpite) {
 async function deleteAposta(id) {
     if (confirm('Deseja realmente deletar esta aposta?')) {
         try {
-            await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+            await fetch(`${'http://localhost:3000/api/apostas'}/${id}`, { method: 'DELETE' });
             fetchApostas();
         } catch (error) {
             console.error('Erro ao deletar aposta:', error);

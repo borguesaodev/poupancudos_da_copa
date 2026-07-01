@@ -53,6 +53,8 @@ app.delete('/api/apostas/:id', (req, res) => {
     res.status(204).send();
 });
 
+app.use(express.static('public'));
+
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
